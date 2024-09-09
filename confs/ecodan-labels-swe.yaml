@@ -1,14 +1,14 @@
 substitutions:
-  status_three_way_valve: 3-vägs Ventil
-  status_three_way_valve_2: 3-vägs Ventil 2
-  heatpump_climate_dhw: Tappvarmvatten Klimat
-  dhw_temp: Tappvarmvatten Temp
-  dhw_secondary_temp: Tappvarmvatten sekundär Temp
-  status_dhw_forced: Tappvarmvatten Tvinga
-  dhw_flow_temp_drop: Tappvarmvatten Max Temperaturfall
-  status_prohibit_dhw: Tappvarmvatten Förbjud
-  dhw_flow_temp_target: Tappvarmvatten Börvärde
-  status_dhw_eco: Tappvarmvatten Eco
+  status_three_way_valve: 3-Vägs Ventil
+  status_three_way_valve_2: 3-Vägs Ventil 2
+  heatpump_climate_dhw: Varmvatten
+  dhw_temp: VV Tilloppstemp
+  dhw_secondary_temp: VV Returtemp
+  status_dhw_forced: Tvångsdrift VV
+  dhw_flow_temp_drop: VV Max Temperaturfall
+  status_prohibit_dhw: Förbjud VV
+  dhw_flow_temp_target: Börvärde VV
+  status_dhw_eco: VV Eco
   esp_ip: ESP IP
   internal_esp_temperature: ESP Intern Temp
   esp_sidd: ESP SSID
@@ -18,80 +18,80 @@ substitutions:
   status_in1_request: In1 Termostat
   status_in6_request: In6 Termostat 2
   status_in5_request: In5 Ute Termostat
-  heatpump_select_dhw_mode: Tappvarmvatten Läge
+  heatpump_select_dhw_mode: VV Driftläge
   normal: Normal
   eco: Eco
   version: ESP Version
   led_brightness: LED Ljusstyrka
   led_switch: LED
-  heatpump_switch_force_dhw: Tvinga Tappvarmvatten
+  heatpump_switch_force_dhw: Tvångsdrift VV
   heatpump_switch_power_mode: Värmepump
   heatpump_switch_holiday: Semesterläge
   wifi_signal_proc: WiFi Signal %
   wifi_signal_db: WiFi Signal dB
   z1_flow_temp_target: Zon1 V/K Börvärde
-  status_prohibit_cool_z1: Zon1 Förbjud Kyla
-  status_prohibit_heating_z1: Zon1 Förbjud Värme
-  heatpump_climate_z1: Zon1 Klimat
+  status_prohibit_cool_z1: Zon1 Kylförbud
+  status_prohibit_heating_z1: Zon1 Värmeförbud
+  heatpump_climate_z1: Zon1
   z1_room_temp_target: Zon1 Rumsbörvärde
-  z1_room_temp: Zon1 Rumstemperatur
+  z1_room_temp: Zon1 Rumstemp
   heatpump_number_z2_set_flow_temperature: Zon2 V/K Börvärde
   z2_flow_temp_target: Zon2 V/K Börvärde
-  status_prohibit_cool_z2: Zon2 Förbjud Kyla
-  status_prohibit_heating_z2: Zon2 Förbjud Värme
-  heatpump_number_z2_set_room_temperature: Zon2 Rrumsbörvärde
-  heatpump_climate_z2: Zon2 Klimat
+  status_prohibit_cool_z2: Zon2 Kylförbud
+  status_prohibit_heating_z2: Zon2 Värmeföbud
+  heatpump_number_z2_set_room_temperature: Zon2 Rumsbörvärde
+  heatpump_climate_z2: Zon2
   z2_room_temp_target: Zon2 Rumsbörvärde
-  z2_room_temp: Zon2 Rumstemperatur
-  boiler_flow_temp: Tilloppstemp Panna
-  boiler_return_temp: Returtemp Panna
-  status_booster: Tillskott Värme
-  compressor_frequency: Kompressorfrekvens
-  controller_version_text: Controllerversion
-  cool_consumed: Kyla Förbrukad
+  z2_room_temp: Zon2 Rumstemp
+  boiler_flow_temp: Värme Tilloppstemp
+  boiler_return_temp: Värme Returtemp
+  status_booster: Eltillskott
+  compressor_frequency: Kompressorfrekvenz
+  controller_version_text: Controller Version
+  cool_consumed: Konsumerad Kyla
   cool_cop: Kyla COP
-  cool_delivered: Kyla Levererad
+  cool_delivered: Tillverkad Kyla
   status_defrost: Avfrostning
-  dhw_consumed: Tappvarmvatten Förbrukad
-  dhw_cop: Tappvarmvatten COP
-  dhw_delivered: Tappvarmvatten Levererad
-  hp_feed_temp: Matning Temp
-  z1_feed_temp: Z1 Matning Temp
-  z2_feed_temp: Z2 Matning Temp
-  flow_rate: Flödeshastighet
+  dhw_consumed: Förbrukad VV
+  dhw_cop: VV COP
+  dhw_delivered: Tillverkad VV
+  hp_feed_temp: Tilloppstemp
+  z1_feed_temp: Z1 Tilloppstemp
+  z2_feed_temp: Z2 Tilloppstemp
+  flow_rate: Flöde
   heat_source_text: Värmekälla
   heatpump: Värmepump
   immersion_heater: Elpatron
-  booster_heater: Tillskott
-  immersion_and_booster_heater: Elpatron Och Tillskott
+  booster_heater: Eltillskott
+  immersion_and_booster_heater: Elpatron Och Eltillskott
   boiler: Panna
-  heating_consumed: Värme Förbrukad
+  heating_consumed: Förbrukad Värme
   heating_cop: Värme COP
-  heating_delivered: Värme Levererad
+  heating_delivered: Tillverkad Värme
   status_holiday: Semesterläge
   status_immersion: Elpatron
-  legionella_prevention_temp: Legionella Börvärde
-  heatpump_select_operating_mode: Valt driftläge
-  heat_target_temperature: Värme Börfärde
-  heat_flow_temperature: Tilloppstemperatur Värme
-  heat_compensation_curve: Värmekompensationskurva
-  cool_target_temperature: Kyla Börvärde
-  cool_flow_temperature: Kyla Tilloppstemperatur
+  legionella_prevention_temp: Legionella Ställd Temp
+  heatpump_select_operating_mode: Valt Driftläge
+  heat_target_temperature: Måltemperatur Värme
+  heat_flow_temperature: Flödestemperatur Värme
+  heat_compensation_curve: Värmekurva
+  cool_target_temperature: Måltemperatur Kyla
+  cool_flow_temperature: Flödestemperatur Kyla
   operation_off: "Off"
-  hotwater: Värmer Vatten
-  heating: Rumsuppvärmning
-  cooling: Rumskylning
+  hotwater: Varmvatten
+  heating: Rumsvärme
+  cooling: Rumskyla
   frost_protection: Frostskydd
-  legionella_prevention: Legionella Motverkan
+  legionella_prevention: Legionella
   runtime: Drifttid
   status_operation: Driftläge
-  output_power: Effektuttag
-  computed_output_power: Beräknat Effektuttag
+  output_power: Uteffekt
+  computed_output_power: Uppskattad Uteffekt
   outside_temp: Utetemp
-  hp_refrigerant_temp: Köldmedium Temp
-  hp_refrigerant_condensing_temp: Köldmedium Kondenseringstemp
-  hp_return_temp: Retur Temp
-  z1_return_temp: Z1 Retur Temp
-  z2_return_temp: Z2 Retur Temp 
-  status_water_pump: Cirkulationspump Status
-  status_water_pump_2: Cirkulationspump 2 Status
+  hp_refrigerant_temp: Temp Köldmedium
+  hp_refrigerant_condensing_temp: Kondenseringstemp Köldmedium
+  hp_return_temp: Returtemp
+  z1_return_temp: Z1 Returtemp
+  z2_return_temp: Z2 Returtemp 
+  status_water_pump: Cirkulationspump
+  status_water_pump_2: Cirkulationspump 2
