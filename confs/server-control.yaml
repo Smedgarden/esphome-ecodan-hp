@@ -1,6 +1,6 @@
   switch:
   - platform: template
-    name: SC - Aktivera/Inaktivera
+    name: SC - Inaktivera/Aktivera
     id: heatpump_switch_server_control_mode
     restore_mode: RESTORE_DEFAULT_OFF
     optimistic: true
