@@ -43,11 +43,14 @@ substitutions:
   heatpump_climate_z2: Zon2
   z2_room_temp_target: Zon2 Rumsbörvärde
   z2_room_temp: Zon2 Rumstemp
+  mixing_tank_temp: Blandad Tanktemo
   boiler_flow_temp: Värme Tilloppstemp
   boiler_return_temp: Värme Returtemp
   status_booster: Eltillskott
   compressor_frequency: Kompressorfrekvenz
   controller_version_text: Controller Version
+  controller_firmware_text: Controller Mjukvara
+  controller_datetime_text: Controller Datum
   cool_consumed: Konsumerad Kyla
   cool_cop: Kyla COP
   cool_delivered: Tillverkad Kyla
@@ -95,3 +98,5 @@ substitutions:
   z2_return_temp: Z2 Returtemp 
   status_water_pump: Cirkulationspump
   status_water_pump_2: Cirkulationspump 2
+  fault_code_text: Felkod
+  refrigerant_error_code_text: Felkod Kyla
