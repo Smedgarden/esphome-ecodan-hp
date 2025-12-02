@@ -1,38 +1,33 @@
-monthly_cool_consumed:
-  unique_id: utility_monthly_cool_consumed
-  source: sensor.heatpump_total_cool_consumed
-  name: Monthly cool consumed
-  cycle: monthly
-  delta_values: true
-monthly_cool_produced:
-  unique_id: utility_monthly_cool_delivered
-  source: sensor.heatpump_total_cool_produced
-  name: Monthly cool produced
-  cycle: monthly
-  delta_values: true
+sensor:
+    # detailed homewizard usage
+    - name: "Heatpump Power Idle"
+      unique_id: heatpump_power_idle
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement
+      state: "{{ states('sensor.kwh_meter_3_phase_active_power') | float(0) if states('sensor.ecodan_heatpump_operation_mode') not in ['Heating Water', 'Legionella Prevention', 'Space Heating', 'Space Cooling', 'Frost Protection'] else 0 }}"
 
-monthly_heating_consumed:
-  unique_id: utility_monthly_heating_consumed
-  source: sensor.heatpump_total_heating_consumed
-  name: Monthly heating consumed
-  cycle: monthly
-  delta_values: true
-monthly_heating_produced:
-  unique_id: utility_monthly_heating_delivered
-  source: sensor.heatpump_heating_cool_produced
-  name: Monthly heating produced
-  cycle: monthly
-  delta_values: true
+    - name: "Heatpump Power DHW"
+      unique_id: heatpump_power_dhw
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement
+      state: "{{ states('sensor.kwh_meter_3_phase_active_power') | float(0) if is_state('sensor.ecodan_heatpump_operation_mode', ['Heating Water', 'Legionella Prevention']) else 0 }}"
 
-monthly_dhw_consumed:
-  unique_id: utility_monthly_dhw_consumed
-  source: sensor.heatpump_total_dhw_consumed
-  name: Monthly dhw consumed
-  cycle: monthly
-  delta_values: true
-monthly_dhw_produced:
-  unique_id: utility_monthly_dhw_delivered
-  source: sensor.heatpump_total_dhw_produced
-  name: Monthly dhw produced
-  cycle: monthly
-  delta_values: true
+    - name: "Heatpump Power Heating"
+      unique_id: heatpump_power_heating
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement
+      state: "{{ states('sensor.kwh_meter_3_phase_active_power') | float(0) if is_state('sensor.ecodan_heatpump_operation_mode', ['Space Heating', 'Frost Protection']) else 0 }}"
+
+    - name: "Heatpump Power Cooling"
+      unique_id: heatpump_power_cooling
+      unit_of_measurement: "W"
+      device_class: power
+      state_class: measurement
+      state: "{{ states('sensor.kwh_meter_3_phase_active_power') | float(0) if is_state('sensor.ecodan_heatpump_operation_mode', 'Space Cooling') else 0 }}"
+
+# to create increasing sensors to be used in HA energy dashboard use
+# Settings > Devices & services, click helpers, then Create Helper, choose integral
+# fill in: Name, metric prefix: k, input sensor: one of the sensors above, integration method: Left Riemann sum and hit submit
