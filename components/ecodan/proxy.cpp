@@ -2,14 +2,16 @@
 
 namespace esphome {
 namespace ecodan 
-{
-    void EcodanHeatpump::handle_proxy() {
-        if (!serial_rx(proxy_uart_, proxy_buffer_))
-            return;
+{ 
+    void EcodanHeatpump::proxy_ping() {
+        this->last_proxy_activity_.store(std::chrono::steady_clock::now());
+    } 
 
-        ESP_LOGI(TAG, "Proxy RX: %s", proxy_buffer_.debug_dump_packet().c_str());
-        proxy_buffer_ = Message();
-    }
-
-}
-}
+    bool EcodanHeatpump::proxy_available() {
+        auto now = std::chrono::steady_clock::now();
+        auto timeout = now - this->last_proxy_activity_.load() > std::chrono::seconds(60);
+        return proxy_uart_ && !timeout;
+    } 
+    
+} // namespace ecodan
+} // namespace esphome

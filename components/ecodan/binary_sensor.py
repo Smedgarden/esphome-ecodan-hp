@@ -5,6 +5,8 @@ from esphome.const import CONF_ID
 from esphome.const import (
     ENTITY_CATEGORY_NONE,
     DEVICE_CLASS_RUNNING,
+    DEVICE_CLASS_PROBLEM,
+    ENTITY_CATEGORY_DIAGNOSTIC
 )
 
 from . import ECODAN, CONF_ECODAN_ID
@@ -29,6 +31,11 @@ CONFIG_SCHEMA = cv.Schema(
             entity_category=ENTITY_CATEGORY_NONE,
         ),
         cv.Optional("status_booster"): binary_sensor.binary_sensor_schema(
+            icon="mdi:water-boiler",
+            entity_category=ENTITY_CATEGORY_NONE,
+            device_class=DEVICE_CLASS_RUNNING,
+        ),
+        cv.Optional("status_booster_2"): binary_sensor.binary_sensor_schema(
             icon="mdi:water-boiler",
             entity_category=ENTITY_CATEGORY_NONE,
             device_class=DEVICE_CLASS_RUNNING,
@@ -65,11 +72,40 @@ CONFIG_SCHEMA = cv.Schema(
             entity_category=ENTITY_CATEGORY_NONE,
             device_class=DEVICE_CLASS_RUNNING,
         ),
+        cv.Optional("status_water_pump_3"): binary_sensor.binary_sensor_schema(
+            icon="mdi:water-pump",
+            entity_category=ENTITY_CATEGORY_NONE,
+            device_class=DEVICE_CLASS_RUNNING,
+        ),
         cv.Optional("status_three_way_valve_2"): binary_sensor.binary_sensor_schema(
             icon="mdi:valve",
             entity_category=ENTITY_CATEGORY_NONE,
             device_class=DEVICE_CLASS_RUNNING,
         ),
+        cv.Optional("status_server_control"): binary_sensor.binary_sensor_schema(
+            icon="mdi:water-boiler-off",
+            entity_category=ENTITY_CATEGORY_NONE,
+        ),
+        cv.Optional("status_server_control_prohibit_dhw"): binary_sensor.binary_sensor_schema(
+            icon="mdi:water-boiler-off",
+            entity_category=ENTITY_CATEGORY_NONE,
+        ),
+        cv.Optional("status_server_control_prohibit_heating_z1"): binary_sensor.binary_sensor_schema(
+            icon="mdi:hvac-off",
+            entity_category=ENTITY_CATEGORY_NONE,
+        ),
+        cv.Optional("status_server_control_prohibit_cool_z1"): binary_sensor.binary_sensor_schema(
+            icon="mdi:hvac-off",
+            entity_category=ENTITY_CATEGORY_NONE,
+        ),
+        cv.Optional("status_server_control_prohibit_heating_z2"): binary_sensor.binary_sensor_schema(
+            icon="mdi:hvac-off",
+            entity_category=ENTITY_CATEGORY_NONE,
+        ),
+        cv.Optional("status_server_control_prohibit_cool_z2"): binary_sensor.binary_sensor_schema(
+            icon="mdi:hvac-off",
+            entity_category=ENTITY_CATEGORY_NONE,
+        ),                
         cv.Optional("status_prohibit_dhw"): binary_sensor.binary_sensor_schema(
             icon="mdi:water-boiler-off",
             entity_category=ENTITY_CATEGORY_NONE,
@@ -97,6 +133,16 @@ CONFIG_SCHEMA = cv.Schema(
         cv.Optional("status_power"): binary_sensor.binary_sensor_schema(
             entity_category=ENTITY_CATEGORY_NONE,
             icon="mdi:power-off",
+        ),
+        cv.Optional("status_compressor"): binary_sensor.binary_sensor_schema(
+            icon="mdi:hvac",
+            entity_category=ENTITY_CATEGORY_NONE,
+            device_class=DEVICE_CLASS_RUNNING,
+        ),
+        cv.Optional("status_short_cycle_lockout"): binary_sensor.binary_sensor_schema(
+            icon="mdi:hvac",
+            entity_category=ENTITY_CATEGORY_DIAGNOSTIC,
+            device_class=DEVICE_CLASS_PROBLEM,
         ),
     }).extend(cv.COMPONENT_SCHEMA)
 
