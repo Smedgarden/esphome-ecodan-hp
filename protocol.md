@@ -119,10 +119,10 @@ Active commands so far identified.
 * Z2SP : Zone 2 Setpoint (* 100)
 * MRC Prohibit : (Read 0x26 Byte 14) - **MRC Prohibit command must NOT be written to Shizuoka designed models**
   * 0 : Disable Prohibits
-  * 8 : Function Set Prohibit
-  * 32 : Setting Temperature Prohibit
-  * 64 : Running Mode Prohibit
-  * 128 : System On/Off Prohibit
+  * 0x04 : Function Set Prohibit
+  * 0x10 : Setting Temperature Prohibit
+  * 0x20 : Running Mode Prohibit
+  * 0x40 : System On/Off Prohibit
 ### 0x34 - Hot Water and Holiday Mode
 |   0   |  1  |  2  | 3 |   4  |  5   |   6  |  7  |   8   |   9   |  10  |  11  |  12  |  13  | 14 | 15 | 16 |
 |-------|-----|-----|---|------|------|------|-----|-------|-------|------|------|------|------|----|----|----|
@@ -269,9 +269,10 @@ Responses so far identified.
 ### 0x07 - Heater Power
 |   0   | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 |
 |-------|---|---|---|---|---|---|---|---|---|----|----|----|----|----|----|----|
-| 0x07  |   |   |   | I |   | P |   |   |   |    |    |    |    |    |    |    |  
+| 0x07  |   |   |   | I |   | P |   |   |   |    |  E |  E |    |    |    |    |  
 * I : Input Power (kW) - 0 = 0-1kW, 1 = 1-2kW, 2 = 2-3kW etc.
 * P : Heater Power (to nearest kW)
+* E : Total Input Power / 10 (kWh) 'increasing' (FTC6+)
 ### 0x09 - Zone 1 & 2 Temperatures and Setpoints, Hot Water Setpoint
 | 0    |   1  |   2  | 3    | 4    | 5    | 6    | 7    | 8    |  9  |  10 |  11 | 12 | 13 | 14 | 15 | 16 |
 |------|------|------|------|------|------|------|------|------|-----|-----|-----|----|----|----|----|----|
@@ -287,11 +288,11 @@ Responses so far identified.
 ### 0x0b - Zone 1 & 2 and Outside Temperature
 |   0  |  1  |  2  |  3  | 4 | 5 | 6 | 7 |  8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 |
 |------|-----|-----|-----|---|---|---|---|----|---|----|----|----|----|----|----|----|
-| 0x0b | Z1T | Z1T | Z2T |Z2T| ? | ? |   | RT | RT | CT | O  |    |    |    |    |    |
+| 0x0b | Z1T | Z1T | Z2T |Z2T| ? | ? |   | RT | RT | UT | O  |    |    |    |    |    |
 * Z1T : Zone1 Temperature * 100
 * Z2T : Zone2 Temperature * 100
 * RT : Refrigerant Temperature * 100 (Where TH2 is installed)
-* CT : Condensing Temperature /2 - 40
+* UT : Unknown Temperature /2 - 40 (FTC6)
 * O : Outside Temp  /2 - 40
 ### 0x0c - Heater Flow Temps
 |  0   | 1  | 2  | 3 | 4  | 5  | 6 | 7  |  8 | 9 |  10 |  11 | 12 | 13 | 14 | 15 | 16 |
@@ -315,11 +316,21 @@ Responses so far identified.
 | 0x0e | F | F |   | R | R |   |   |   |   |    |    |    |    |    |    |    |
 * F : Boiler Flow Temperature * 100    (Where THWB1 installed)
 * R : Boiler Return Temperature * 100     (Where THWB2 is installed)
-### 0x0f - Thermistors 2
+### 0x0f - Thermistors 3 (FTC6+ Only, FTC7+ for byte >= 7)
 |  0   | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 |
 |------|---|---|---|---|---|---|---|---|---|----|----|----|----|----|----|----|
-| 0x0f | M | M |   |   |   |   |   |   |   |    |    |    |    |    |    |    |
-* M : Mixing Tank Temperature * 100        (Where THW10 is installed)  
+| 0x0f | M | M |   | C | C | R |TH4|TH3|TH6|TH32| TH8|TH33| SH | SC |    |    |
+* M : Mixing Tank Temperature * 100        (Where THW10 is installed)
+* C : Refrigerant condensing Temperature * 100
+* R : Unknown Temperature /2 - 40 (FTC6)
+* TH4: Outdoor unit Discharge temp (uint8_t)
+* TH3: Outdoor unit Liquid pipe 1 temp (/2 - 39)
+* TH6: Outdoor unit Two phase pipe temp (/2 - 39)
+* TH32: Outdoor unit Suction temp (/2 - 39)
+* TH8: Outdoor unit Heat sink temp (uint8_t - 40)
+* TH33: Outdoor unit Compressor surface temp (uint8_t - 40)
+* SH: Superheat (uint8_t)
+* SC: Subcool (/2 - 39)
 ### 0x10 - External sources
 |   0   | 1  | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 |
 |-------|----|---|---|---|---|---|---|---|---|----|----|----|----|----|----|----|
@@ -327,6 +338,16 @@ Responses so far identified.
 * T1 : In1 room thermostat 1 H/C request status (on/off)
 * T2 : In6 room thermostat 2 H/C request status (on/off)
 * T3 : In5 outdoor thermostat (on/off)
+### 0x11 - Dip Switches (FTC6 only?)
+|   0   |  1  |  2  |  3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 |
+|-------|-----|-----|----|---|---|---|---|---|---|----|----|----|----|----|----|----|
+| 0x10  | 1   |     | 2  |   | 3 |   | 4 |   | 5 |    |  6  |    |    |    |    |    |
+* Switch 1 (8..1, 0=off, 1=on)
+* Switch 2 (8..1, 0=off, 1=on)
+* Switch 3 (8..1, 0=off, 1=on)
+* Switch 4 (8..1, 0=off, 1=on)
+* Switch 5 (8..1, 0=off, 1=on)
+* Switch 6 (8..1, 0=off, 1=on)
 ### 0x13 - Run Hours
 |   0   | 1  | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 |
 |-------|----|---|---|---|---|---|---|---|---|----|----|----|----|----|----|----|
@@ -336,18 +357,22 @@ Responses so far identified.
 ### 0x14 - Primary Cct Flow Rate
 |   0   | 1  | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 |
 |-------|----|---|---|---|---|---|---|---|---|----|----|----|----|----|----|----|
-| 0x14  |    | B |   |   | I |   |   |   |   |    | PF |    |    |    |    |    |  
+| 0x14  |    | B1| B2|   | I |   |   |   |   |    | PF |    |    |    |    |    |  
 * PF : Primary Flow Rate (l/min)
-* B : Booster heater active
+* B1 : Booster heater 1 active
+* B2 : Booster heater 2 active
 * I : Immersion heater active
 ### 0x15 - Pump status
-|   0   | 1  |  2 |  3 |  4 | 5 |  6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 |
-|-------|----|----|----|----|---|----|---|---|---|----|----|----|----|----|----|----|
-| 0x15  | P1 |    |    | P2 |   | V1 | V2|   |   |    |    |    |    |    |    |    |  
+|   0   | 1  |  2 |  3 |  4 |  5 |  6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 |
+|-------|----|----|----|----|----|----|---|---|---|----|----|----|----|----|----|----|
+| 0x15  | P1 |    |    | P2 | P3 | V1 | V2|   |   | v3 |    |    |    |    |    |    |  
 * P1 : Water pump 1 status
   * 0 : Off
   * 1 : On
 * P2 : Water pump 2 status
+  * 0 : Off
+  * 1 : On
+* P3 : Water pump 3 status (Out3)
   * 0 : Off
   * 1 : On
 * V1 : 3 way valve 1 status
@@ -356,6 +381,11 @@ Responses so far identified.
 * V2 : 3 way valve 2 status
   * 0 : Off
   * 1 : On
+* V3 : Mixing Valve Status
+  * 0 : Idle
+  * 1 : Closing
+  * 2 : Opening
+  * 3 : Closed
 ### 0x16 - Pumps Running
 |   0   | 1  |  2 |  3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 |
 |-------|----|----|----|---|---|---|---|---|---|----|----|----|----|----|----|----|
